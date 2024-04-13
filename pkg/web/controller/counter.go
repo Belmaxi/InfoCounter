@@ -4,7 +4,6 @@ import (
 	"InfoCounter/pkg/dao/impl"
 	"InfoCounter/pkg/entity"
 	"github.com/gin-gonic/gin"
-	"strconv"
 )
 
 type InfoControllerImpl struct {
@@ -28,12 +27,6 @@ func (impl InfoControllerImpl) AddTable(c *gin.Context) {
 	info.Class = c.PostForm("class")
 	info.ActivityName = c.PostForm("activity_name")
 	info.Date = c.PostForm("date")
-	j, err := strconv.Atoi(c.PostForm("user_number"))
-	if err != nil {
-		c.JSON(200, map[string]interface{}{"error": "user_number is not valid"})
-		return
-	}
-	info.UserNumber = int(j)
 	ok := impl.dao.AddTable(c, info)
 	if ok == "ok" {
 		c.JSON(200, map[string]interface{}{"message": "ok"})
@@ -54,7 +47,6 @@ func (impl InfoControllerImpl) GetTableByID(c *gin.Context) {
 			"name":          info.Name,
 			"phone_number":  info.PhoneNumber,
 			"class":         info.Class,
-			"user_number":   info.UserNumber,
 			"activity_name": info.ActivityName,
 			"date":          info.Date,
 		},

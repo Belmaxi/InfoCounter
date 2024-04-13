@@ -16,8 +16,8 @@ func RunHttp() {
 	//路由组
 	appInfoGroup := r.Group("/")
 	{
-		appInfoGroup.POST("/add_table", controller.NewInfoControllerImpl().AddTable)
-		appInfoGroup.GET("/get_table_by_id/:key", controller.NewInfoControllerImpl().GetTableByID)
+		appInfoGroup.POST("/add-table", controller.NewInfoControllerImpl().AddTable)
+		appInfoGroup.GET("/get-table-by-id/:key", controller.NewInfoControllerImpl().GetTableByID)
 	}
-	r.Run("127.0.0.1:" + config.PORT)
+	r.Run(":" + config.PORT)
 }
