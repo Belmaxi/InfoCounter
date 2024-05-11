@@ -18,6 +18,8 @@ func RunHttp() {
 	{
 		appInfoGroup.POST("/add-table", controller.NewInfoControllerImpl().AddTable)
 		appInfoGroup.GET("/get-table-by-id/:key", controller.NewInfoControllerImpl().GetTableByID)
+		appInfoGroup.POST("/create-user", controller.NewInfoControllerImpl().CreateUser)
+		appInfoGroup.POST("/get-password", controller.NewInfoControllerImpl().GetPassword)
 	}
 	r.Run(":" + config.PORT)
 }

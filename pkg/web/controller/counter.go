@@ -22,12 +22,14 @@ func NewInfoControllerImpl() *InfoControllerImpl {
 
 func (impl InfoControllerImpl) AddTable(c *gin.Context) {
 	var info entity.UserInfo
+	print(c.Keys)
 	info.Id = c.PostForm("id")
 	info.Name = c.PostForm("name")
 	info.PhoneNumber = c.PostForm("phone_number")
 	info.Class = c.PostForm("class")
 	info.ActivityName = c.PostForm("activity_name")
 	info.Date = c.PostForm("date")
+	info.Room = c.PostForm("class_room")
 	ok := impl.dao.AddTable(c, info)
 	if ok == "ok" {
 		c.JSON(200, map[string]interface{}{"message": "ok"})
@@ -53,6 +55,10 @@ func (impl InfoControllerImpl) GetTableByID(c *gin.Context) {
 		},
 	})
 }
+
+//func (impl InfoControllerImpl) GetTables(c *gin.Context){
+//	info := impl.dao.
+//}
 
 func (impl InfoControllerImpl) CreateUser(c *gin.Context) {
 	id := c.PostForm("id")

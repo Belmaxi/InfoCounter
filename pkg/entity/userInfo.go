@@ -7,6 +7,7 @@ type UserInfo struct {
 	PhoneNumber  string `json:"phone_number"`
 	ActivityName string `json:"activity_name"`
 	Date         string `json:"date"`
+	Room         string `json:"class_room"`
 }
 
 func (stu UserInfo) TableName() string {
