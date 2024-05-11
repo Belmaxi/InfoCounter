@@ -4,6 +4,7 @@ import (
 	"InfoCounter/pkg/dao/impl"
 	"InfoCounter/pkg/entity"
 	"github.com/gin-gonic/gin"
+	"strconv"
 )
 
 type InfoControllerImpl struct {
@@ -51,4 +52,22 @@ func (impl InfoControllerImpl) GetTableByID(c *gin.Context) {
 			"date":          info.Date,
 		},
 	})
+}
+
+func (impl InfoControllerImpl) CreateUser(c *gin.Context) {
+	id := c.PostForm("id")
+	psw := c.PostForm("password")
+	permission, _ := strconv.Atoi(c.PostForm("permission"))
+
+	if impl.dao.CreateUser(id, psw, permission) {
+		c.JSON(200, map[string]interface{}{"message": "error"})
+	} else {
+		c.JSON(200, map[string]interface{}{"message": "ok"})
+	}
+}
+
+func (impl InfoControllerImpl) GetPassword(c *gin.Context) {
+	id := c.PostForm("id")
+	psw := impl.dao.GetPassword(id)
+	c.JSON(200, map[string]interface{}{"password": psw})
 }

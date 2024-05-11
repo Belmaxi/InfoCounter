@@ -45,3 +45,24 @@ func (impl StatisticsDAOImpl) GetTableByID(ctx context.Context, id string) entit
 	}
 	return info
 }
+
+func (impl StatisticsDAOImpl) CreateUser(id string, password string, permission int) bool {
+	_, err := impl.db.Exec("insert into admin values(?,?,?)", id, password, permission)
+	if err != nil {
+		fmt.Println("增加账号错误")
+		return false
+	}
+	return true
+}
+
+func (impl StatisticsDAOImpl) GetPassword(id string) string {
+	result := impl.db.QueryRow("select * from admin where id = ?", id)
+	var id_ string
+	var psw string
+	var pem int
+	err := result.Scan(&id_, &psw, &pem)
+	if err != nil {
+		fmt.Println("无法获取账户信息")
+	}
+	return psw
+}
