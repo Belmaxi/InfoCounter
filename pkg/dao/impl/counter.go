@@ -39,7 +39,7 @@ func (impl StatisticsDAOImpl) AddTable(ctx context.Context, info entity.UserInfo
 func (impl StatisticsDAOImpl) GetTableByID(ctx context.Context, id string) entity.UserInfo {
 	result := impl.db.QueryRow("select * from user where id = ?", id)
 	var info entity.UserInfo
-	err := result.Scan(&info.Id, &info.Name, &info.Class, &info.PhoneNumber, &info.ActivityName, &info.Date)
+	err := result.Scan(&info.Id, &info.Name, &info.Class, &info.PhoneNumber, &info.ActivityName, &info.Date, &info.Room)
 	print(err.Error())
 	if err != nil {
 		fmt.Println("Invalid query")
@@ -47,10 +47,19 @@ func (impl StatisticsDAOImpl) GetTableByID(ctx context.Context, id string) entit
 	return info
 }
 
-//func (impl StatisticsDAOImpl) GetTables() {
-//	result, err := impl.db.Query("select * from user")
-//
-//}
+func (impl StatisticsDAOImpl) GetTables() []entity.UserInfo {
+	result, err := impl.db.Query("select * from user")
+	var infos = make([]entity.UserInfo, 0, 100)
+	if err == nil {
+		print(1)
+		for result.Next() {
+			var info entity.UserInfo
+			err = result.Scan(&info.Id, &info.Name, &info.Class, &info.PhoneNumber, &info.ActivityName, &info.Date, &info.Room)
+			infos = append(infos, info)
+		}
+	}
+	return infos
+}
 
 func (impl StatisticsDAOImpl) CreateUser(id string, password string, permission int) bool {
 	_, err := impl.db.Exec("insert into admin values(?,?,?)", id, password, permission)

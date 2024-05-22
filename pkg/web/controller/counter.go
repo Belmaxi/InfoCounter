@@ -52,13 +52,18 @@ func (impl InfoControllerImpl) GetTableByID(c *gin.Context) {
 			"class":         info.Class,
 			"activity_name": info.ActivityName,
 			"date":          info.Date,
+			"room":          info.Room,
 		},
 	})
 }
 
-//func (impl InfoControllerImpl) GetTables(c *gin.Context){
-//	info := impl.dao.
-//}
+func (impl InfoControllerImpl) GetTables(c *gin.Context) {
+	infos := impl.dao.GetTables()
+	c.JSON(200, gin.H{
+		"message": "ok",
+		"tables":  infos,
+	})
+}
 
 func (impl InfoControllerImpl) CreateUser(c *gin.Context) {
 	id := c.PostForm("id")
